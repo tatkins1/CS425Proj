@@ -50,7 +50,7 @@ router.post('/customer', function(req, res, next) {
         console.log(c);
         res.send(c).status(200);
     });*/
-    res.send().status(200);
+    res.send(true).status(200);
 
 
 });

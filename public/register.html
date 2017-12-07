@@ -24,7 +24,7 @@
                 </div>
             </div>
 
-            <button type="button" id="submit" class="btn btn-primary">Add CC</button>
+            <button type="button" id="submit" class="btn btn-primary">Register</button>
         </form>
         <a href="/home.html">home</a>
             <a href="/account.html">account</a>
@@ -42,7 +42,7 @@
 
             $.post("http://localhost:3000/api/customer", payload,
                 function(data, status) {
-                    if (data.login) {
+                    if (data) {
                        
                        alert("created user successfully");
                         //setTimeout(function() { window.location.href = '/home.html'; }, 1000);
