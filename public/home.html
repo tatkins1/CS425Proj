@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>CS 425 FlightBooking</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>ABH Flights</h1>
+        </div>
+        <br>
+        <div class="row">
+            <div class=col-md-6>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">@Geo</span>
+                    <input type="text" class="form-control" placeholder="Origin" aria-label="Origin" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class=col-md-6>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">@Geo</span>
+                    <input type="text" class="form-control" placeholder="Destination" aria-label="Destination" aria-describedby="basic-addon1">
+                </div>
+            </div>
+        </div>
+        <div class="pt-2 px-3 row">
+            <div class=col-md-6>
+                <div class="form-group">
+                    <span class="align-top">Departure Date:</span>
+                    <input type="text" class="form-control" placeholder="Departure Date:">
+                </div>
+            </div>
+            <div class=col-md-6>
+                <div class="form-group">
+                    <span class="align-top">Return Date:</span>
+                    <input disabled type="text" class="form-control" placeholder="Return Date:">
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"> Add Return Date?
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-2 justify-content-center">
+            <div class=col-md-3>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Example select</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+            </div>
+            <div class=col-md-3>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Example select</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+            </div>
+            <div class=col-md-3>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Max Price</label>
+                    <input type="text" class="form-control" placeholder="$">
+                </div>
+            </div>
+        </div>
+        <div class="pt-3 ">
+            <button id="search">Search </button>
+        </div>
+        <table id="results" class="table table-dark">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Flight #</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Airline</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody id="results2">
+                
+            </tbody>
+        </table>
+    </div>
+    <script>
+    var submit = document.getElementById('search');
+    submit.addEventListener('click', search);
+
+    function search() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText.constructor.name);
+                var results = JSON.parse(this.responseText);
+                console.log(results);
+                var table = document.getElementById('results2');
+                results.forEach((result, i) => {
+                    var newRow = document.createElement("tr");
+                    var col1 = document.createElement("th");
+                    var num = document.createTextNode(i);
+                    col1.appendChild(num);
+                    var col2 = document.createElement("td");
+                    var flightnum = document.createTextNode("" + result.flightnum);
+                    col2.appendChild(flightnum);
+                    var col3 = document.createElement("td");
+                    var airline = document.createTextNode("" + result.airline);
+                    col3.appendChild(airline);
+                    var col4 = document.createElement("td");
+                    var time = document.createTextNode("" + result.time);
+                    col4.appendChild(time);
+                    var col5 = document.createElement("td");
+                    var price = document.createTextNode("" + result.price);
+                    col5.appendChild(price);
+
+                    newRow.appendChild(col1);
+                    newRow.appendChild(col2);
+                    newRow.appendChild(col3);
+                    newRow.appendChild(col4);
+                    newRow.appendChild(col5);
+                    table.appendChild(newRow);
+                });
+            }
+
+        };
+        xhttp.open("GET", "http://localhost:3000/api/flights?origin=x&destination=y&date1=120517", true);
+        xhttp.send();
+
+    }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+</body>
+
+</html>
