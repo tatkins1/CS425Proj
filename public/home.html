@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>CS 425 FlightBooking</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -14,74 +15,81 @@
             <h1>ABH Flights</h1>
         </div>
         <br>
-        <div class="row">
-            <div class=col-md-6>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">@Geo</span>
-                    <input type="text" class="form-control" placeholder="Origin" aria-label="Origin" aria-describedby="basic-addon1">
+        <form id="flights_form">
+            <div class="row">
+                <div class=col-md-6>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">@Geo</span>
+                        <input type="text" class="form-control" name="Origin" placeholder="Origin" aria-label="Origin" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class=col-md-6>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">@Geo</span>
+                        <input type="text" class="form-control" name="Destination" placeholder="Destination" aria-label="Destination" aria-describedby="basic-addon1">
+                    </div>
                 </div>
             </div>
-            <div class=col-md-6>
-                <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">@Geo</span>
-                    <input type="text" class="form-control" placeholder="Destination" aria-label="Destination" aria-describedby="basic-addon1">
+            <div class="pt-2 px-3 row">
+                <div class=col-md-6>
+                    <div class="form-group">
+                        <span class="align-top">Departure Date:</span>
+                        <input type="text" name="departure_date" class="form-control" placeholder="Departure Date:">
+                    </div>
+                </div>
+                <div class=col-md-6>
+                    <div class="form-group">
+                        <span class="align-top">Return Date:</span>
+                        <input disabled type="text" id="returnDate" name="arrival_date" class="form-control" placeholder="Return Date:">
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label">
+                            <input class="form-check-input" name="return_check" type="checkbox" id="isReturn" value="option1"> Add Return Date?
+                        </label>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="pt-2 px-3 row">
-            <div class=col-md-6>
-                <div class="form-group">
-                    <span class="align-top">Departure Date:</span>
-                    <input type="text" class="form-control" placeholder="Departure Date:">
+            <div class="row pt-2 justify-content-center">
+                <div class=col-md-3>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Maximum Travel Time</label>
+                        <select class="form-control" name="travel_time" id="exampleFormControlSelect1">
+                            <option>3</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>12</option>
+                            <option>24</option>
+                        </select>
+                    </div>
+                </div>
+                <div class=col-md-3>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Maximum Connections</label>
+                        <select class="form-control" name="connections" id="exampleFormControlSelect1">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                </div>
+                <div class=col-md-3>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Max Price</label>
+                        <input type="text" name="max_price" class="form-control" placeholder="$">
+                    </div>
                 </div>
             </div>
-            <div class=col-md-6>
-                <div class="form-group">
-                    <span class="align-top">Return Date:</span>
-                    <input disabled type="text" class="form-control" placeholder="Return Date:">
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"> Add Return Date?
-                    </label>
-                </div>
+            <div class="pt-3 ">
+                <button type="button" id="search">Search </button>
             </div>
-        </div>
-        <div class="row pt-2 justify-content-center">
-            <div class=col-md-3>
-                <div class="form-group">
-                    <label for="exampleFormControlSelect1">Example select</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                </div>
-            </div>
-            <div class=col-md-3>
-                <div class="form-group">
-                    <label for="exampleFormControlSelect1">Example select</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                </div>
-            </div>
-            <div class=col-md-3>
-                <div class="form-group">
-                    <label for="exampleFormControlSelect1">Max Price</label>
-                    <input type="text" class="form-control" placeholder="$">
-                </div>
-            </div>
-        </div>
-        <div class="pt-3 ">
-            <button id="search">Search </button>
-        </div>
+        </form>
+        <br>
+        <br>
+        <hr>
+        <br>
+        <br>
         <table id="results" class="table table-dark">
             <thead class="thead-light">
                 <tr>
@@ -93,14 +101,26 @@
                 </tr>
             </thead>
             <tbody id="results2">
-                
             </tbody>
         </table>
         <a href="/account.html">account</a>
-            <a href="/">Login</a>
+        <a href="/">Login</a>
     </div>
-
     <script>
+    $(document).ready(function() {
+        let formArray = $("#flights_form").serializeArray();
+        let formData = objectifyForm(formArray);
+
+
+        function objectifyForm(formArray) { //serialize data function
+
+            let returnMap = {};
+            for (let i = 0; i < formArray.length; i++) {
+                returnMap[formArray[i]['name']] = formArray[i]['value'];
+            }
+            return returnMap;
+        }
+    });
     var submit = document.getElementById('search');
     submit.addEventListener('click', search);
 
@@ -145,7 +165,6 @@
 
     }
     </script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 </body>

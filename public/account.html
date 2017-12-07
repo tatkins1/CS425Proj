@@ -34,8 +34,13 @@
                 </div>
             </div>
         </form>
+        <a href="#addresses">Addresses</a>
+        <a href="#ccs">Credit Cards</a>
+        <a href="#bookings">Bookings</a>
+        <br>
+        <br>
         <h3>Addresses</h3>
-        <table id="adresses" class="table">
+        <table id="addresses" class="table">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">Address</th>
@@ -129,6 +134,26 @@
             </div>
             <button type="button" id="submitCC" class="btn btn-primary">Add CC</button>
         </form>
+        <br>
+        <br>
+        <hr>
+        <br>
+        <br>
+        <h3>BOOKINGS</h3>
+        <table id="bookings" class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">flight num</th>
+                    <th scope="col">Departure</th>
+                    <th scope="col">Departure Time</th>
+                    <th scope="col">Class/Seat</th>
+                    <th scope="col">Arrival</th>
+                    <th scope="col">Arrival Time</th>
+                </tr>
+            </thead>
+            <tbody id="address_results">
+            </tbody>
+        </table>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>

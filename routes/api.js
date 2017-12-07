@@ -18,10 +18,10 @@ var pool = new Pool(config);
 
 async function get_hits(email, firstname) {
 
-    var response = await pool.query("INSERT INTO customer (email, firstName) VALUES ('" + email + "','" + firstname + "');");
+    var response = await pool.query("INSERT INTO customer (name, email) VALUES ('" + email + "','" + firstname + "');");
     var customers = await pool.query("select * from customer");
-
-    return customers.rows;
+    console.log(customers.rows);
+    //return customers.rows;
 }
 
 
@@ -45,12 +45,12 @@ router.post('/customer', function(req, res, next) {
     let firstname = req.body.name;
     console.log(email);
     console.log(firstname);
-    let customers = get_hits(email, firstname);
-    customers.then(c => {
+    get_hits(email, firstname);
+   /* customers.then(c => {
         console.log(c);
         res.send(c).status(200);
-    });
-
+    });*/
+    res.send().status(200);
 
 
 });
