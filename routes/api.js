@@ -8,14 +8,18 @@ var config = {
     "password": "testpassword",
     "database": "testdb"
 }
+//psql scripts
+//Create database testdb;
+//Create user testuser;
+//grant all privileges on database testdb to testuser;
+//alter role testuser with password 'testpassword';
+//connect testdb as testuser
 var pool = new Pool(config);
 
 async function get_hits(email, firstname) {
 
     var response = await pool.query("INSERT INTO customer (email, firstName) VALUES ('" + email + "','" + firstname + "');");
     var customers = await pool.query("select * from customer");
-    //console.log(customers.rows);
-    console.log("sent");
 
     return customers.rows;
 }
@@ -55,7 +59,32 @@ router.put('/customer', function(req, res, next) {
     let addresses = req.body.addresses;
     let payment_methods = req.body.payment_methods;
 });
+router.post('/login', function(req, res, next) {
+    //login
 
+    let email = req.body.email;
+    let name = req.body.name;
+    checkUser(name, email).then(e => {
+        if (e.rows.length == 1) {
+
+            console.log("success");
+            res.send({ "login": true }).status(200);
+        } else {
+
+            console.log("fail");
+            res.send({ "login": false }).status(200);
+        }
+    });
+
+    async function checkUser(name, email) {
+
+        let response = await pool.query("SELECT * FROM CUSTOMER WHERE name='" + name + "' AND email='" + email + "';");
+
+        return response;
+    }
+
+
+});
 router.get('/search', function(req, res, next) {
     // edit adresses and payment methods
 
