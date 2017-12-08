@@ -40,18 +40,18 @@ router.post('/customer', function(req, res, next) {
     console.log(email);
     console.log(firstname);
     get_hits(email, firstname);
-   /* customers.then(c => {
-        console.log(c);
-        res.send(c).status(200);
-    });*/
+    /* customers.then(c => {
+         console.log(c);
+         res.send(c).status(200);
+     });*/
     res.send(true).status(200);
     async function get_hits(email, firstname) {
 
-    var response = await pool.query("INSERT INTO customer (name, email) VALUES ('" + email + "','" + firstname + "');");
-    var customers = await pool.query("select * from customer");
-    console.log(customers.rows);
-    //return customers.rows;
-}
+        var response = await pool.query("INSERT INTO customer (name, email) VALUES ('" + email + "','" + firstname + "');");
+        var customers = await pool.query("select * from customer");
+        console.log(customers.rows);
+        //return customers.rows;
+    }
 
 
 });
@@ -107,28 +107,28 @@ router.get('/flights', function(req, res, next) {
     let origin = req.query.origin;
     console.log(origin);
     console.log(req.query);
-    
-    let output = [{
-            "flightnum": "AA234",
-            "airline": "AA",
-            "time": "5:30pm",
-            "price": 400
-        },
-        {
-            "flightnum": "U322",
-            "airline": "United",
-            "time": "6:30am",
-            "price": 800
-        },
-        {
-            "flightnum": "E323",
-            "airline": "Emerites",
-            "time": "1:00pm",
-            "price": 1200
-        }
-    ];
+    let flights = getFlights(req.query);
+    flights.then(function(f) {
+    	res.send(flights.rows).status(200);
+    });
+    let output = {};
     res.send(output).status(200);
 
+
+    async function getFlights(flight_data) {
+    		if(flight_data.return){
+
+    		}
+
+    		else{
+    	let response = await pool.query(
+    		"SELECT * FROM FLIGHT WHERE origin='${flightdata.origin}' AND destination='${flightdata.destination}'  AND depature_date='${flightdata.depature_date}' AND connections='${flightdata.connections}' AND max_price = '${flightdata.max_price}' AND travel_time='${flightdata.travel_time}' "
+    		);
+    		 return response;
+    		}
+
+       
+    }
 
 });
 
