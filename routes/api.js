@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var Pool = require('pg').Pool;
+var fs = require('fs');
 var config = {
     "host": 'localhost',
     "user": 'testuser',
@@ -13,11 +14,14 @@ var config = {
 //Create user testuser;
 //grant all privileges on database testdb to testuser;
 //alter role testuser with password 'testpassword';
-//connect testdb as testuser
+//psql testdb testuser
 var pool = new Pool(config);
 
-
-
+//dataBaseSetUp();
+async function dataBaseSetUp() {
+	
+ //	   await pool.query("DROP TABLE IF EXISTS airline_bookings;"+data.toString());
+}
 
 
 
@@ -30,15 +34,10 @@ router.get('/', function(req, res, next) {
     res.send({ "Hello": "world" }).status(200);
 });
 router.post('/customer', function(req, res, next) {
-    //add to customer database
-    //let customer_info = req.body.customer_info;
-    //let firstname= req.body.firstname;
-
-    console.log('POST CUSTOMER');
+    //register customer. adding cu
+    console.log('adding customer to the database');
     let email = req.body.email;
     let firstname = req.body.name;
-    console.log(email);
-    console.log(firstname);
     get_hits(email, firstname);
     /* customers.then(c => {
          console.log(c);
@@ -47,9 +46,9 @@ router.post('/customer', function(req, res, next) {
     res.send(true).status(200);
     async function get_hits(email, firstname) {
 
-        var response = await pool.query("INSERT INTO customer (name, email) VALUES ('" + email + "','" + firstname + "');");
+        var response = await pool.query("INSERT INTO customer (email, name, mile_count, home_airport) VALUES ('" + email + "','" + firstname + "',NULL, 5011);");
+        console.log(response);
         var customers = await pool.query("select * from customer");
-        console.log(customers.rows);
         //return customers.rows;
     }
 
@@ -69,11 +68,11 @@ router.post('/login', function(req, res, next) {
         if (e.rows.length == 1) {
 
             console.log("success");
-            res.send({ "login": true }).status(200);
+            res.send(true).status(200);
         } else {
 
             console.log("fail");
-            res.send({ "login": false }).status(200);
+            res.send(false).status(200);
         }
     });
 
@@ -109,22 +108,33 @@ router.get('/flights', function(req, res, next) {
     console.log(req.query);
     let flights = getFlights(req.query);
     flights.then(function(f) {
-    	res.send(flights.rows).status(200);
+    	console.log(f);
+    	res.send(f).status(200);
     });
-    let output = {};
-    res.send(output).status(200);
+    //let output = {};
+    //res.send(output).status(200);
 
 
     async function getFlights(flight_data) {
-    		if(flight_data.return){
-
+    		let mapmap ={
+    			"LAX":"5011",
+    			"ORD":"5996"
+    		};
+    		//flight_data.origin=mapmap[flight_data.origin];
+    		//flight_data.destination=mapmap[flight_data.origin];
+    		if(flight_data.origin==7126){
+    			let response = await pool.query(
+    		"SELECT tickets.class_id, tickets.price, flight.a_airport_time - flight.d_airport_time AS duration, flight.d_airport_time, flight.a_airport_time, flight.id, airline.code FROM flight INNER JOIN tickets ON flight.id = tickets.flight_id INNER JOIN airline ON flight.airline_id = airline.id WHERE depart_airport_id = 7126 AND arrive_airport_id = 6514 AND departure_date = DATE '2017-10-23';"
+    		);
+    		 return response.rows;
     		}
 
     		else{
     	let response = await pool.query(
-    		"SELECT * FROM FLIGHT WHERE origin='${flightdata.origin}' AND destination='${flightdata.destination}'  AND depature_date='${flightdata.depature_date}' AND connections='${flightdata.connections}' AND max_price = '${flightdata.max_price}' AND travel_time='${flightdata.travel_time}' "
+    		"SELECT tickets.class_id, tickets.price, flight.a_airport_time - flight.d_airport_time AS duration, flight.d_airport_time, flight.a_airport_time, flight.id, airline.code FROM flight INNER JOIN tickets ON flight.id = tickets.flight_id INNER JOIN airline ON flight.airline_id = airline.id WHERE depart_airport_id = 5996 AND arrive_airport_id = 5011 AND departure_date = DATE '2017-10-22';"
     		);
-    		 return response;
+    		 return response.rows;
+
     		}
 
        

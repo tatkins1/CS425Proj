@@ -87,7 +87,7 @@
                     <input type="text" class="form-control" id="inputZip">
                 </div>
             </div>
-            <button type="button" id="submitC" class="btn btn-primary">Add Address</button>
+            <button type="button" id="submitAddress" class="btn btn-primary">Add Address</button>
         </form>
         <br/>
         <br/>
@@ -158,7 +158,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <script>
+        $(document).ready(function() {
+            $('#submitCC').click(function() {
+
+            });
+             $('#submitAddress').click(function() {
+
+            });
+              $('#submitCC').click(function() {
+
+            });
+        });
     </script>
 </body>
+select * 
+From flights as c1 natural join flights as c2 on c1.departurs=c2.arrivals left outerjoin flights as c3 on c2.departures = c3.arrivals
 
 </html>

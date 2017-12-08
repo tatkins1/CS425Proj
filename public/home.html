@@ -66,6 +66,7 @@
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Maximum Connections</label>
                         <select class="form-control" name="connections" id="exampleFormControlSelect1">
+
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -93,10 +94,12 @@
         <table id="results" class="table table-dark">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Flight #</th>
-                    <th scope="col">Time</th>
                     <th scope="col">Airline</th>
+                    <th scope="col">Class</th>
+                    <th scope="col">Depature Time</th>
+                    <th scope="col">Arrival Time</th>
+                    <th scope="col">Duration</th>
                     <th scope="col">Price</th>
                 </tr>
             </thead>
@@ -120,6 +123,11 @@
 
                         console.log("flight get succesful")
                         console.log(data);
+                        $('#results2').empty();
+                        data.forEach(function(f) {
+                            $('#results2').append("<tr><td>"+f.id+"</td><td>"+f.code+"</td><td>"+f.class_id+"</td><td>"+f.d_airport_time+"</td><td>"+f.d_airport_time+"</td><td>"+f.duration.hours+"</td><td>"+f.price+"</td></tr>");
+                        });
+                        
                     } else {
                         //login unsuccessful
                         alert(" Error Please retry");

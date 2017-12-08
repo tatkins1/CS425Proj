@@ -48,7 +48,7 @@
 
             $.post("http://localhost:3000/api/login", payload,
                 function(data, status) {
-                    if (data.login) {
+                    if (data) {
                        
                        
                         setTimeout(function() { window.location.href = '/home.html'; }, 1000);
