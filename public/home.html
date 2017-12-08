@@ -20,13 +20,13 @@
                 <div class=col-md-6>
                     <div class="input-group">
                         <span class="input-group-addon" id="basic-addon1">@Geo</span>
-                        <input type="text" class="form-control" name="Origin" placeholder="Origin" aria-label="Origin" aria-describedby="basic-addon1">
+                        <input type="text" class="form-control" name="origin" placeholder="Origin" aria-label="Origin" aria-describedby="basic-addon1">
                     </div>
                 </div>
                 <div class=col-md-6>
                     <div class="input-group">
                         <span class="input-group-addon" id="basic-addon1">@Geo</span>
-                        <input type="text" class="form-control" name="Destination" placeholder="Destination" aria-label="Destination" aria-describedby="basic-addon1">
+                        <input type="text" class="form-control" name="destination" placeholder="Destination" aria-label="Destination" aria-describedby="basic-addon1">
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                 <div class=col-md-6>
                     <div class="form-group">
                         <span class="align-top">Return Date:</span>
-                        <input disabled type="text" id="returnDate" name="arrival_date" class="form-control" placeholder="Return Date:">
+                        <input disabled type="text" id="returnDate" name="return_date" class="form-control" placeholder="Return Date:">
                     </div>
                     <div class="form-check form-check-inline">
                         <label class="form-check-label">
@@ -108,9 +108,26 @@
     </div>
     <script>
     $(document).ready(function() {
-        let formArray = $("#flights_form").serializeArray();
-        let formData = objectifyForm(formArray);
 
+        $("#search").click(function() {
+            let formArray = $("#flights_form").serializeArray();
+            let formData = objectifyForm(formArray);
+            console.log(formData);
+
+            $.get("http://localhost:3000/api/flights", formData,
+                function(data, status) {
+                    if (data) {
+
+                        console.log("flight get succesful")
+                        console.log(data);
+                    } else {
+                        //login unsuccessful
+                        alert(" Error Please retry");
+                    }
+                });
+
+
+        });
 
         function objectifyForm(formArray) { //serialize data function
 
@@ -121,7 +138,7 @@
             return returnMap;
         }
     });
-    var submit = document.getElementById('search');
+    /*var submit = document.getElementById('search');
     submit.addEventListener('click', search);
 
     function search() {
@@ -163,7 +180,7 @@
         xhttp.open("GET", "http://localhost:3000/api/flights?origin=x&destination=y&date1=120517", true);
         xhttp.send();
 
-    }
+    }*/
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>

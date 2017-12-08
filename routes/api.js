@@ -16,13 +16,7 @@ var config = {
 //connect testdb as testuser
 var pool = new Pool(config);
 
-async function get_hits(email, firstname) {
 
-    var response = await pool.query("INSERT INTO customer (name, email) VALUES ('" + email + "','" + firstname + "');");
-    var customers = await pool.query("select * from customer");
-    console.log(customers.rows);
-    //return customers.rows;
-}
 
 
 
@@ -51,6 +45,13 @@ router.post('/customer', function(req, res, next) {
         res.send(c).status(200);
     });*/
     res.send(true).status(200);
+    async function get_hits(email, firstname) {
+
+    var response = await pool.query("INSERT INTO customer (name, email) VALUES ('" + email + "','" + firstname + "');");
+    var customers = await pool.query("select * from customer");
+    console.log(customers.rows);
+    //return customers.rows;
+}
 
 
 });
@@ -105,6 +106,8 @@ router.get('/flights', function(req, res, next) {
 
     let origin = req.query.origin;
     console.log(origin);
+    console.log(req.query);
+    
     let output = [{
             "flightnum": "AA234",
             "airline": "AA",
